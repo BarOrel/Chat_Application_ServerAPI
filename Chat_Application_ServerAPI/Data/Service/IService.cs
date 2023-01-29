@@ -1,4 +1,5 @@
 ﻿using Chat_Application_ServerAPI.Data.Models;
+using Chat_Application_ServerAPI.Data.Models.DTO.chatRoom;
 
 namespace Chat_Application_ServerAPI.Data.Service
 {
@@ -8,7 +9,8 @@ namespace Chat_Application_ServerAPI.Data.Service
         Task<IEnumerable<Message>> GetMessagesByRoom(ChatRoom Chat);
         Task<IEnumerable<Message>> GetAllMessages();
         Task DeleteChatById(int id);
-        Task DeleteMessageById(int id);
+        Task DeleteMessageById(Message entity);
+        Task<List<chatRoomView>> GetChatView(string UserId);
         Task<ChatRoom> GetRoomById(int id);
         Task CreateChatRoom(ChatRoom entity);
         Task AddMessage(Message entity);

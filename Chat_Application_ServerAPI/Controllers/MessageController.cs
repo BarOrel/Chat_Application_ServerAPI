@@ -4,7 +4,7 @@ using Chat_Application_ServerAPI.Data.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Chat_Application_ServerAPI.Data.Repository.MessageRepo;
+
 using Chat_Application_ServerAPI.Data.Models.DTO.message;
 
 namespace Chat_Application_ServerAPI.Controllers
@@ -31,7 +31,7 @@ namespace Chat_Application_ServerAPI.Controllers
                 SentTime = DateTime.Now,
 
             };
-            var res = service.AddMessage(message);
+            await service.AddMessage(message);
             return Ok(message);
         }
 

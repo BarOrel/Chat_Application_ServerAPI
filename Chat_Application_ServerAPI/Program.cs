@@ -1,6 +1,5 @@
 using Chat_Application_ServerAPI.Data.Models;
 using Chat_Application_ServerAPI.Data.Repository.ChatRoomRepo;
-using Chat_Application_ServerAPI.Data.Repository.MessageRepo;
 using Chat_Application_ServerAPI.Data.Service;
 using Chat_Application_ServerAPI.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ToDoListPractice.Data.Services.JWT;
 using ToDoListPractice.Data.Services;
+using Chat_Application_ServerAPI.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +32,7 @@ builder.Services.AddControllers().AddJsonOptions(x => {
 
 builder.Services.AddScoped<IService, Service>();
 builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
-builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IJWTTokenService, JWTTokenService>();
 
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options => {

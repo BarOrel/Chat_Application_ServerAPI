@@ -31,26 +31,8 @@ namespace Chat_Application_ServerAPI.Controllers
         [HttpGet("{userid}")]
         public async Task<IActionResult> GetByUser(string UserId)
         {
-            List<chatRoomView> roomView = new();
-            var res = await service.GetRoomsByUser(UserId);
-            foreach (var item in res)
-            {
-                chatRoomView chat = new();
-                chat.Chat = item;
-                   
-                var result = await service.GetMessagesByRoom(item);
-                chat.LastMessage = result.LastOrDefault();
-                if (chat.LastMessage == null)
-                {
-                     Message message = new() { Content = "Chat is empty , Say Hey ! :)" };
-                     chat.LastMessage = message;
-                     chat.SentTime = "";
-                }
-                chat.SentTime = chat.LastMessage.SentTime.ToShortTimeString();
-                roomView.Add(chat);
-            }
-
-            return Ok(roomView);
+            var res = await service.GetChatView(UserId);
+            return Ok(res);
         }
 
         [HttpGet("GetChat/{ChatRoomId}")]
@@ -93,12 +75,6 @@ namespace Chat_Application_ServerAPI.Controllers
         [HttpDelete("Delete/{ChatRoomId}")]
         public async Task<IActionResult> Delete(int ChatRoomId)
         {
-            var room = await service.GetRoomById(ChatRoomId);
-            var res = await service.GetMessagesByRoom(room);
-            foreach (var item in res)
-            {
-                await service.DeleteMessageById(item.Id);
-            }
             await service.DeleteChatById(ChatRoomId);
             return Ok(ChatRoomId);
         }
