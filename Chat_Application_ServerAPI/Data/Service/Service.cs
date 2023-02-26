@@ -80,6 +80,7 @@ namespace Chat_Application_ServerAPI.Data.Service
                 chat.SentTime = chat.LastMessage.SentTime.ToShortTimeString();
                 roomView.Add(chat);
             }
+            roomView = roomView.OrderByDescending(n => n.SentTime).ToList();
             return roomView;
         }
 
